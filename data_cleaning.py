@@ -23,11 +23,5 @@ df = df.round(decimals=2)
 # Sorting data from largest to smallest
 df = df.sort_values(by='Average height in Cm', ascending=False)
 
-# Reset index if any missing rows
-df.reset_index()
-
-# Restart index at 1
-df.index = df.index + 1
-
 # Writing cleaned data to new CSV file
-df.to_csv('height_cleaned.csv')
+df.to_csv('height_cleaned.csv', index=False)
