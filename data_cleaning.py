@@ -1,5 +1,5 @@
 import pandas as pd
-import numpy as np
+
 
 # Reading original data file
 df = pd.read_csv('no_shows.csv')
@@ -25,6 +25,12 @@ df.drop(index= df[(df.alcoholism) & (df.age < 18)].index , inplace=True)
 
 #checking the operation
 print(df[(df.alcoholism) & (df.age < 18)].shape)
+
+# Drop index column
+df = df.set_index('gender')
+
+# Change no_show column from Yes/No to 1/0
+df.no_show = df.no_show.map(dict(Yes=1, No=0))
 
 # Writing cleaned data to new CSV file
 df.to_csv('no_shows_cleaned.csv')
