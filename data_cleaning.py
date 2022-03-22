@@ -2,26 +2,16 @@ import pandas as pd
 import numpy as np
 
 # Reading original data file
-df = pd.read_csv('height.csv')
+df = pd.read_csv('no_shows.csv')
 
-# Calculating average height in Cm (male and female)
-col_cm = df.loc[: , "Male Height in Cm":"Female Height in Cm"]
-df['Average height in Cm'] = col_cm.mean(axis=1)
+# Dropping not needed columns
+df = df.drop(['PatientId'])
 
-# Dropping rank and columns with ft
-df = df.drop(['Rank', 'Female Height in Ft', 'Male Height in Ft'], axis=1)
+#setting all column names to lowercase
+df = df.columns.str.lower()
 
-# Reorder columns
-df = df[['Country Name', 'Average height in Cm', 'Male Height in Cm', 'Female Height in Cm']]
-
-# Replacing any NaN values with 0 if they exist
-df = df.fillna(0)
-
-# Ensuring all data is rounded to two decimal places
-df = df.round(decimals=2)
-
-# Sorting data from largest to smallest
-df = df.sort_values(by='Average height in Cm', ascending=False)
+# Drop ages that are less than 0
+df = df[df.age >= 0]
 
 # Writing cleaned data to new CSV file
-df.to_csv('height_cleaned.csv', index=False)
+df.to_csv('no_shows_cleaned.csv', index=False)
